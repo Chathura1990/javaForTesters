@@ -1,4 +1,6 @@
-public class JavaForTesters{
+package by.itsm;
+
+public class JavaForTesters {
 
     public static void main(String[] args) {
 
