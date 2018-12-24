@@ -1,3 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = "JavaForTesters"
+
+repositories{
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'org.testng:testng:6.8.21'
+}
