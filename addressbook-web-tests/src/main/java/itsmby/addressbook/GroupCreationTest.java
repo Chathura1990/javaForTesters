@@ -1,31 +1,13 @@
 package itsmby.addressbook;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.*;
+import itsmby.setupAndLogin.SetupAndLogin;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
-
-public class GroupCreationTest {
-  private WebDriver wd;
-
-  @BeforeMethod(alwaysRun = true)
-  public void setUp() throws Exception {
-    System.setProperty("webdriver.chrome.driver", ".\\src\\main\\resources\\driver\\chromedriver.exe");
-    wd = new ChromeDriver();
-    wd.manage().window().maximize();
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    login("admin", "secret");
-  }
-
-  private void login(String username, String password) {
-    wd.get("http://localhost/addressbook/");
-    wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys(username);
-    wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys(password);
-    wd.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password:'])[1]/following::input[2]")).click();
-  }
+public class GroupCreationTest extends SetupAndLogin {
 
   @Test
   public void testGroupCreation() throws Exception {
