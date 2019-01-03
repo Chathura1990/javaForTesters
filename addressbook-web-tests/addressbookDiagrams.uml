@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>itsmby.addressbook.tests.GroupCreationTest</OriginalElement>
+  <nodes>
+    <node x="2.7916666666666856" y="401.0">itsmby.addressbook.tests.GroupDeletionTest</node>
+    <node x="-33.0" y="-1.0">itsmby.addressbook.appmanager.GroupHelper</node>
+    <node x="169.79166666666669" y="401.0">itsmby.addressbook.tests.GroupCreationTest</node>
+    <node x="80.72916666666669" y="111.0">itsmby.addressbook.appmanager.ApplicationManager</node>
+    <node x="108.72916666666669" y="278.0">itsmby.addressbook.tests.TestBase</node>
+    <node x="163.0" y="0.0">itsmby.addressbook.appmanager.NavigationHelper</node>
+    <node x="326.0" y="0.0">itsmby.addressbook.appmanager.SessionHelper</node>
+    <node x="337.7916666666667" y="379.0">itsmby.addressbook.tests.CreateContactsTest</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="itsmby.addressbook.appmanager.ApplicationManager" target="itsmby.addressbook.appmanager.NavigationHelper">
+      <point x="16.0" y="-58.5" />
+      <point x="224.72916666666669" y="91.0" />
+      <point x="234.5" y="91.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="itsmby.addressbook.appmanager.ApplicationManager" target="itsmby.addressbook.appmanager.SessionHelper">
+      <point x="80.0" y="-58.5" />
+      <point x="288.7291666666667" y="81.0" />
+      <point x="361.75" y="81.0" />
+      <point x="-35.75" y="25.5" />
+    </edge>
+    <edge source="itsmby.addressbook.tests.GroupCreationTest" target="itsmby.addressbook.tests.TestBase">
+      <point x="37.0" y="-14.5" />
+      <point x="280.7916666666667" y="359.0" />
+      <point x="248.72916666666669" y="359.0" />
+      <point x="40.0" y="25.5" />
+    </edge>
+    <edge source="itsmby.addressbook.appmanager.ApplicationManager" target="itsmby.addressbook.appmanager.GroupHelper">
+      <point x="-112.0" y="-58.5" />
+      <point x="96.72916666666669" y="91.0" />
+      <point x="23.833333333333314" y="91.0" />
+      <point x="-47.666666666666686" y="25.5" />
+    </edge>
+    <edge source="itsmby.addressbook.tests.GroupDeletionTest" target="itsmby.addressbook.tests.TestBase">
+      <point x="36.75" y="-14.5" />
+      <point x="113.04166666666669" y="359.0" />
+      <point x="168.72916666666669" y="359.0" />
+      <point x="-40.0" y="25.5" />
+    </edge>
+    <edge source="itsmby.addressbook.tests.TestBase" target="itsmby.addressbook.appmanager.ApplicationManager">
+      <point x="-50.0" y="-25.5" />
+      <point x="158.72916666666669" y="253.0" />
+      <point x="144.72916666666669" y="253.0" />
+      <point x="-64.0" y="58.5" />
+    </edge>
+    <edge source="itsmby.addressbook.tests.CreateContactsTest" target="itsmby.addressbook.tests.TestBase">
+      <point x="0.0" y="-36.5" />
+      <point x="438.7916666666667" y="359.0" />
+      <point x="288.7291666666667" y="359.0" />
+      <point x="80.0" y="25.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="243.0" y="398.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

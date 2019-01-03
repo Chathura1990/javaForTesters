@@ -1,6 +1,6 @@
-package itsmby.homeTask4;
+package itsmby.addressbook.model;
 
-public class GroupData {
+public class ContactData {
     private String firstName;
     private String middleName;
     private String lastName;
@@ -8,32 +8,32 @@ public class GroupData {
     private String companyName;
     private String emailAddress;
 
-    public GroupData firstName(String firstName) {
+    public ContactData firstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public GroupData middleName(String middleName) {
+    public ContactData middleName(String middleName) {
         this.middleName = middleName;
         return this;
     }
 
-    public GroupData lastName(String lastName) {
+    public ContactData lastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public GroupData nickname(String nickname) {
+    public ContactData nickname(String nickname) {
         this.nickname = nickname;
         return this;
     }
 
-    public GroupData companyName(String companyName) {
+    public ContactData companyName(String companyName) {
         this.companyName = companyName;
         return this;
     }
 
-    public GroupData emailAddress(String emailAddress) {
+    public ContactData emailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
         return this;
     }
