@@ -30,10 +30,6 @@ public class ApplicationManager{
         wd.quit();
     }
 
-    public void logout() {
-      wd.findElement(By.linkText("Logout")).click();
-    }
-
     public ContactHelper getContactHelper() {
         return contactHelper;
     }
