@@ -9,12 +9,16 @@ public class CreateContactsTest extends TestBase {
     @Test
     public void testCreateContacts() {
        app.getContactHelper().clickAddNewButton();
-       app.getContactHelper().addFirstName(contactData.firstName("Chathura"));
-       app.getContactHelper().addMiddleName(contactData.middleName("S"));
-       app.getContactHelper().addLastName(contactData.lastName("Rajapakse"));
-       app.getContactHelper().addNickName(contactData.nickname("Chath"));
-       app.getContactHelper().addCompanyName(contactData.companyName("ITSM"));
-       app.getContactHelper().addEmail(contactData.emailAddress("chathurasanjeew@gmail.com"));
+       app.getContactHelper().addFirstName(contactData.firstName("Tony"));
+       app.getContactHelper().addMiddleName(contactData.middleName("m"));
+       app.getContactHelper().addLastName(contactData.lastName("Shadow"));
+       app.getContactHelper().addNickName(contactData.nickname("Ton"));
+       app.getContactHelper().addCompanyName(contactData.companyName("Pie.soft"));
+       app.getContactHelper().addEmail(contactData.emailAddress("ton.pie@soft.eu"));
+       app.getContactHelper().addBirthDate(contactData.birthDate("4"));
+       app.getContactHelper().addBirthMonth(contactData.birthMonth("April"));
+       app.getContactHelper().addBirthYear(contactData.birthYear("1990"));
+       app.getContactHelper().addNotes(contactData.notes("Test"));
        app.getContactHelper().clickSubmit();
        app.getNavigationHelper().goToHomePage();
     }

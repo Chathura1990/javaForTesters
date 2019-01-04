@@ -3,6 +3,7 @@ package itsmby.addressbook.appmanager;
 import itsmby.addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class ContactHelper extends HelperBase{
 
@@ -40,6 +41,26 @@ public class ContactHelper extends HelperBase{
 
     public void addFirstName(ContactData contactData) {
         type(By.name("firstname"), contactData.getFirstName());
+    }
+
+    public void addBirthDate(ContactData contactData) {
+        click(By.name("bday"));
+        new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthDate());
+        click(By.name("bday"));
+    }
+
+    public void addBirthMonth(ContactData contactData) {
+        click(By.name("bmonth"));
+        new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBirthMonth());
+        click(By.name("bmonth"));
+    }
+
+    public void addBirthYear(ContactData contactData) {
+        type(By.name("byear"), contactData.getBirthYear());
+    }
+
+    public void addNotes(ContactData contactData){
+        type(By.name("notes"), contactData.getNotes());
     }
 
     public void clickAddNewButton() {
