@@ -19,56 +19,20 @@ public class ContactHelper extends HelperBase{
         click(By.name("update"));
     }
 
-    public void fillContactForm(ContactData contactData){
+    public void fillContactForm(ContactData contactData) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("nickname"), contactData.getNickname());
         type(By.name("company"), contactData.getCompanyName());
         type(By.name("email"), contactData.getEmailAddress());
-    }
-
-    public void addEmail(ContactData contactData) {
-        type(By.name("email"), contactData.getEmailAddress());
-    }
-
-    public void addCompanyName(ContactData contactData) {
-        type(By.name("company"), contactData.getCompanyName());
-    }
-
-    public void addNickName(ContactData contactData) {
-        type(By.name("nickname"), contactData.getNickname());
-    }
-
-    public void addLastName(ContactData contactData) {
-        type(By.name("lastname"), contactData.getLastName());
-    }
-
-    public void addMiddleName(ContactData contactData) {
-        type(By.name("middlename"), contactData.getMiddleName());
-    }
-
-    public void addFirstName(ContactData contactData) {
-        type(By.name("firstname"), contactData.getFirstName());
-    }
-
-    public void addBirthDate(ContactData contactData) {
         click(By.name("bday"));
         new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthDate());
         click(By.name("bday"));
-    }
-
-    public void addBirthMonth(ContactData contactData) {
         click(By.name("bmonth"));
         new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBirthMonth());
         click(By.name("bmonth"));
-    }
-
-    public void addBirthYear(ContactData contactData) {
         type(By.name("byear"), contactData.getBirthYear());
-    }
-
-    public void addNotes(ContactData contactData){
         type(By.name("notes"), contactData.getNotes());
     }
 
