@@ -43,7 +43,7 @@ public class ContactData {
         return this;
     }
 
-    public ContactData birthDate(String birthDate){
+    public ContactData birthDate(String birthDate) {
         this.birthDate = birthDate;
         return this;
     }
@@ -83,14 +83,24 @@ public class ContactData {
         return companyName;
     }
 
-    public String getEmailAddress() { return emailAddress; }
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-    public String getBirthDate(){ return birthDate; }
+    public String getBirthDate() {
+        return birthDate;
+    }
 
-    public String getBirthMonth() { return birthMonth; }
+    public String getBirthMonth() {
+        return birthMonth;
+    }
 
-    public String getBirthYear() { return birthYear; }
+    public String getBirthYear() {
+        return birthYear;
+    }
 
 
-    public String getNotes() { return notes; }
+    public String getNotes() {
+        return notes;
+    }
 }

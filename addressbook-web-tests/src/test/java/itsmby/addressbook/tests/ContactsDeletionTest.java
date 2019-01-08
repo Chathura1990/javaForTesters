@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 public class ContactsDeletionTest extends TestBase {
 
     @Test
-    public void testContactDeletion(){
+    public void testContactDeletion() {
         app.getNavigationHelper().goToHomePage();
         app.getContactHelper().selectContact();
         app.getContactHelper().deleteSelectedContact();
