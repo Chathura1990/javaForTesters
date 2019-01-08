@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class CreateContactsTest extends TestBase {
     ContactData contactData = new ContactData();
 
-    @Test
+    @Test(priority = 1)
     public void testCreateContacts() {
        app.getContactHelper().clickAddNewButton();
        app.getContactHelper().addFirstName(contactData.firstName("Tony"));
@@ -21,6 +21,19 @@ public class CreateContactsTest extends TestBase {
        app.getContactHelper().addNotes(contactData.notes("Test"));
        app.getContactHelper().clickSubmit();
        app.getNavigationHelper().goToHomePage();
+    }
+
+    @Test(priority = 2)
+    public void testFillContactForm(){
+        app.getContactHelper().clickAddNewButton();
+        app.getContactHelper()
+                .fillContactForm(contactData.firstName("Artem")
+                .middleName("V")
+                .lastName("Drabysheuski")
+                .nickname("Arta").companyName("IT Doc")
+                .emailAddress("Arta@itdoc.by"));
+        app.getContactHelper().clickSubmit();
+        app.getNavigationHelper().goToHomePage();
     }
 
 

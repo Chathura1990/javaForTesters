@@ -19,6 +19,15 @@ public class ContactHelper extends HelperBase{
         click(By.name("update"));
     }
 
+    public void fillContactForm(ContactData contactData){
+        type(By.name("firstname"), contactData.getFirstName());
+        type(By.name("middlename"), contactData.getMiddleName());
+        type(By.name("lastname"), contactData.getLastName());
+        type(By.name("nickname"), contactData.getNickname());
+        type(By.name("company"), contactData.getCompanyName());
+        type(By.name("email"), contactData.getEmailAddress());
+    }
+
     public void addEmail(ContactData contactData) {
         type(By.name("email"), contactData.getEmailAddress());
     }
