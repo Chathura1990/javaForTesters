@@ -26,12 +26,16 @@ public class ContactHelper extends HelperBase {
         type(By.name("nickname"), contactData.getNickname());
         type(By.name("company"), contactData.getCompanyName());
         type(By.name("email"), contactData.getEmailAddress());
-        click(By.name("bday"));
-        new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthDate());
-        click(By.name("bday"));
-        click(By.name("bmonth"));
-        new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBirthMonth());
-        click(By.name("bmonth"));
+        if(contactData.getBirthDate() != null){
+            click(By.name("bday"));
+            new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthDate());
+            click(By.name("bday"));
+        }
+        if(contactData.getBirthMonth() != null) {
+            click(By.name("bmonth"));
+            new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBirthMonth());
+            click(By.name("bmonth"));
+        }
         type(By.name("byear"), contactData.getBirthYear());
         type(By.name("notes"), contactData.getNotes());
     }
@@ -41,7 +45,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void selectContact() {
-        click(By.id(getAttribute(By.xpath("//td//input[@type='checkbox']"))));
+        click(By.name("selected[]"));
     }
 
     public void deleteSelectedContact() {
@@ -54,5 +58,15 @@ public class ContactHelper extends HelperBase {
 
     public void selectContactToEdit() {
         click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    }
+
+    public boolean isThereAContact() {
+        return isELementPresent(By.name("selected[]"));
+    }
+
+    public void createContact(ContactData contacts) {
+        clickAddNewButton();
+        fillContactForm(contacts);
+        clickSubmit();
     }
 }

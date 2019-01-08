@@ -32,7 +32,11 @@ public class CreateContactsTest extends TestBase {
                         .middleName("V")
                         .lastName("Drabysheuski")
                         .nickname("Arta").companyName("IT Doc")
-                        .emailAddress("Arta@itdoc.by"));
+                        .emailAddress("Arta@itdoc.by")
+                        .birthDate(null)
+                        .birthMonth(null)
+                        .birthYear(null)
+                        .notes(null));
         app.getContactHelper().clickSubmit();
         app.getNavigationHelper().goToHomePage();
     }
