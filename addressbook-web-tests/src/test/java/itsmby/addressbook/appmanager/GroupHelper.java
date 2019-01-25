@@ -3,6 +3,9 @@ package itsmby.addressbook.appmanager;
 import itsmby.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
@@ -54,5 +57,9 @@ public class GroupHelper extends HelperBase {
 
     public boolean isThereAGroup() {
         return isELementPresent(By.name("selected[]"));
+    }
+
+    public int getGroupCount() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 }
