@@ -1,5 +1,7 @@
 package itsmby.addressbook.model;
 
+import java.util.Objects;
+
 public class ContactData {
 
     private String firstName;
@@ -99,8 +101,27 @@ public class ContactData {
         return birthYear;
     }
 
-
     public String getNotes() {
         return notes;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "firstName='" + firstName + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return Objects.equals(firstName, that.firstName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName);
     }
 }

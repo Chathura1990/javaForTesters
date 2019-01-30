@@ -1,9 +1,15 @@
 package itsmby.addressbook.appmanager;
 
 import itsmby.addressbook.model.ContactData;
+import itsmby.addressbook.model.ContactDataForAssert;
+import itsmby.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -40,12 +46,19 @@ public class ContactHelper extends HelperBase {
         type(By.name("notes"), contactData.getNotes());
     }
 
+    public void fillContactsData(ContactDataForAssert contacts){
+        type(By.name("firstname"), contacts.getFirstName());
+        type(By.name("lastname"), contacts.getLastName());
+        type(By.name("company"), contacts.getCompanyName());
+        type(By.name("email"), contacts.getEmailAddress());
+    }
+
     public void clickAddNewButton() {
         click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContact() {
@@ -56,8 +69,9 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void selectContactToEdit() {
-        click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    public void selectContactToEdit(int index) {
+        wd.findElements(By.xpath("//*[@src='icons/pencil.png']")).get(index).click();
+//        click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
     public boolean isThereAContact() {
@@ -69,4 +83,27 @@ public class ContactHelper extends HelperBase {
         fillContactForm(contacts);
         clickSubmit();
     }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactDataForAssert> getContactList() {
+        List<ContactDataForAssert> contacts = new ArrayList<ContactDataForAssert>();
+        WebElement table = wd.findElement(By.xpath("//*[@id='maintable']/tbody"));
+        List<WebElement> rows = table.findElements(By.tagName("tr"));
+        for (WebElement row : rows) {
+            List<WebElement> Columns_row = row.findElements(By.tagName("td"));
+            int columns_count = Columns_row.size();
+            if (columns_count>0) {
+                String lastName = Columns_row.get(1).getText();
+                String firstName = Columns_row.get(2).getText();
+                System.out.println(lastName + " " + firstName);
+                ContactDataForAssert contact = new ContactDataForAssert(lastName, firstName, null, null);
+                contacts.add(contact);
+            }
+        }
+        return contacts;
+    }
+
 }

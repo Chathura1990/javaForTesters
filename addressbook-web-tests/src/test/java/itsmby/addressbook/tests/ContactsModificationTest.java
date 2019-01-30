@@ -1,7 +1,13 @@
 package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.ContactData;
+import itsmby.addressbook.model.ContactDataForAssert;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class ContactsModificationTest extends TestBase {
     ContactData contactData = new ContactData();
@@ -22,17 +28,18 @@ public class ContactsModificationTest extends TestBase {
                     .notes("Hello"));
         }
         app.getNavigationHelper().goToHomePage();
-        app.getContactHelper().selectContactToEdit();
-        app.getContactHelper().fillContactForm(contactData.firstName("Renold")
-                .lastName("Lec")
-                .companyName("INIZIO.io")
-                .nickname(null)
-                .emailAddress(null)
-                .birthDate(null)
-                .birthMonth(null)
-                .birthYear(null)
-                .notes(null));
+        List<ContactDataForAssert> before = app.getContactHelper().getContactList();
+        app.getContactHelper().selectContactToEdit(before.size() - 1);
+        ContactDataForAssert contacts = new ContactDataForAssert("Renold","Lec","INIZIO.io",null);
+        app.getContactHelper().fillContactsData(contacts);
         app.getContactHelper().clickUpdate();
         app.getNavigationHelper().goToHomePage();
+        List<ContactDataForAssert> after = app.getContactHelper().getContactList();
+//        int after  = app.getContactHelper().getContactCount();
+        Assert.assertEquals(after.size(), before.size());
+
+        before.remove(before.size() - 1);
+        before.add(contacts);
+        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
     }
 }

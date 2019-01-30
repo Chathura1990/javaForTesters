@@ -1,10 +1,14 @@
 package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.ContactData;
+import itsmby.addressbook.model.ContactDataForAssert;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class ContactsDeletionTest extends TestBase {
-    ContactData contactData = new ContactData();
+    private ContactData contactData = new ContactData();
 
     @Test
     public void testContactDeletion() {
@@ -22,9 +26,15 @@ public class ContactsDeletionTest extends TestBase {
                     .notes("Test"));
         }
         app.getNavigationHelper().goToHomePage();
-        app.getContactHelper().selectContact();
+        List<ContactDataForAssert> before = app.getContactHelper().getContactList();
+        app.getContactHelper().selectContact(before.size() - 1);
         app.getContactHelper().deleteSelectedContact();
         app.getContactHelper().acceptDeletion();
         app.getNavigationHelper().goToHomePage();
+        List<ContactDataForAssert> after = app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size() - 1);
+
+        before.remove(before.size() -1);
+        Assert.assertEquals(before,after);
     }
 }
