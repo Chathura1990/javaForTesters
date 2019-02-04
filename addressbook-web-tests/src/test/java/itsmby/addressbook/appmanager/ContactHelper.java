@@ -98,7 +98,6 @@ public class ContactHelper extends HelperBase {
             if (columns_count>0) {
                 String lastName = Columns_row.get(1).getText();
                 String firstName = Columns_row.get(2).getText();
-                System.out.println(lastName + " " + firstName);
                 ContactDataForAssert contact = new ContactDataForAssert(lastName, firstName, null, null);
                 contacts.add(contact);
             }
