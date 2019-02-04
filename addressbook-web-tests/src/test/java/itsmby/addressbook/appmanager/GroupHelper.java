@@ -15,7 +15,7 @@ public class GroupHelper extends HelperBase {
     }
 
     public void returnToGroupPage() {
-        click(By.linkText("create page"));
+        click(By.linkText("group page"));
     }
 
     public void submitGroupCreation() {
@@ -49,7 +49,7 @@ public class GroupHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void create(GroupData group) {
+    public void create(GroupData group) throws InterruptedException {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
@@ -80,7 +80,7 @@ public class GroupHelper extends HelperBase {
 
     public List<GroupData> list() {
         List<GroupData> groups = new ArrayList<GroupData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("span.create"));
+        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements){
             String name = element.getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));

@@ -10,7 +10,7 @@ import java.util.List;
 public class GroupCreationTest extends TestBase {
 
     @Test
-    public void testGroupCreation() {
+    public void testGroupCreation() throws InterruptedException {
         app.goTo().groupPage();
         List<GroupData> before = app.group().list();
         GroupData group = new GroupData("test1", "test", "test");

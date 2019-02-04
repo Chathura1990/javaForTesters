@@ -10,7 +10,7 @@ import java.util.List;
 public class GroupDeletionTest extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
+    public void ensurePreconditions() throws InterruptedException {
         app.goTo().groupPage();
         if (app.group().list().size() == 0) {
             app.group().create(new GroupData("Hi", "This is a", "Deletion"));
