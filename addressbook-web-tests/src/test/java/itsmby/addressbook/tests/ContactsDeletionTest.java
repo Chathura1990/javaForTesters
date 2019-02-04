@@ -1,7 +1,6 @@
 package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.ContactData;
-import itsmby.addressbook.model.ContactDataForAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -26,12 +25,12 @@ public class ContactsDeletionTest extends TestBase {
                     .notes("Test"));
         }
         app.goTo().homePage();
-        List<ContactDataForAssert> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectContact(before.size() - 1);
         app.getContactHelper().deleteSelectedContact();
         app.getContactHelper().acceptDeletion();
         app.goTo().homePage();
-        List<ContactDataForAssert> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(before.size() -1);

@@ -1,8 +1,6 @@
 package itsmby.addressbook.appmanager;
 
 import itsmby.addressbook.model.ContactData;
-import itsmby.addressbook.model.ContactDataForAssert;
-import itsmby.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,13 +44,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("notes"), contactData.getNotes());
     }
 
-    public void fillContactsData(ContactDataForAssert contacts){
-        type(By.name("firstname"), contacts.getFirstName());
-        type(By.name("lastname"), contacts.getLastName());
-        type(By.name("company"), contacts.getCompanyName());
-        type(By.name("email"), contacts.getEmailAddress());
-    }
-
     public void clickAddNewButton() {
         click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
     }
@@ -88,8 +79,8 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactDataForAssert> getContactList() {
-        List<ContactDataForAssert> contacts = new ArrayList<ContactDataForAssert>();
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
         WebElement table = wd.findElement(By.xpath("//*[@id='maintable']/tbody"));
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (WebElement row : rows) {
@@ -98,7 +89,7 @@ public class ContactHelper extends HelperBase {
             if (columns_count>0) {
                 String lastName = Columns_row.get(1).getText();
                 String firstName = Columns_row.get(2).getText();
-                ContactDataForAssert contact = new ContactDataForAssert(lastName, firstName, null, null);
+                ContactData contact = new ContactData().lastName(lastName).firstName(firstName);
                 contacts.add(contact);
             }
         }

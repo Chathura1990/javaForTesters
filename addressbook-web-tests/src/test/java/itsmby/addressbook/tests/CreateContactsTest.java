@@ -1,7 +1,6 @@
 package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.ContactData;
-import itsmby.addressbook.model.ContactDataForAssert;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,17 +15,17 @@ public class CreateContactsTest extends TestBase {
     public void testCreateContacts() {
         int before = app.getContactHelper().getContactCount();
         app.getContactHelper().clickAddNewButton();
-        app.getContactHelper()
-                .fillContactForm(contactData.firstName(RandomStringUtils.randomAlphanumeric(5))
-                        .middleName(RandomStringUtils.randomAlphanumeric(1))
-                        .lastName(RandomStringUtils.randomAlphanumeric(5))
-                        .nickname(RandomStringUtils.randomAlphanumeric(3))
-                        .companyName("pie.soft")
-                        .emailAddress(RandomStringUtils.randomAlphanumeric(5)+"@soft.ru")
-                        .birthDate("4")
-                        .birthMonth("April")
-                        .birthYear("1990")
-                        .notes(RandomStringUtils.randomAlphanumeric(5)));
+        ContactData contactData = new ContactData().firstName(RandomStringUtils.randomAlphanumeric(5))
+                .middleName(RandomStringUtils.randomAlphanumeric(1))
+                .lastName(RandomStringUtils.randomAlphanumeric(5))
+                .nickname(RandomStringUtils.randomAlphanumeric(3))
+                .companyName("pie.soft")
+                .emailAddress(RandomStringUtils.randomAlphanumeric(5)+"@soft.ru")
+                .birthDate("4")
+                .birthMonth("April")
+                .birthYear("1990")
+                .notes(RandomStringUtils.randomAlphanumeric(5));
+        app.getContactHelper().fillContactForm(contactData);
         app.getContactHelper().clickSubmit();
         app.goTo().homePage();
         int after  = app.getContactHelper().getContactCount();
@@ -35,14 +34,14 @@ public class CreateContactsTest extends TestBase {
 
     @Test(priority = 2)
     public void testFillContactForm() {
-        List<ContactDataForAssert> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().clickAddNewButton();
-        ContactDataForAssert contacts = new ContactDataForAssert("Tony","Stark","WorldWar.lk",null);
+        ContactData contacts = new ContactData().firstName("Tony").lastName("Stark").companyName("WorldWar.lk");
         app.getContactHelper()
-                .fillContactsData(contacts);
+                .fillContactForm(contacts);
         app.getContactHelper().clickSubmit();
         app.goTo().homePage();
-        List<ContactDataForAssert> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(contacts);

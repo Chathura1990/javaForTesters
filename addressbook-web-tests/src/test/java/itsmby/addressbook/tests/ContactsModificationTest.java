@@ -1,7 +1,6 @@
 package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.ContactData;
-import itsmby.addressbook.model.ContactDataForAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -27,13 +26,13 @@ public class ContactsModificationTest extends TestBase {
                     .notes("Hello"));
         }
         app.goTo().homePage();
-        List<ContactDataForAssert> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectContactToEdit(before.size() - 1);
-        ContactDataForAssert contacts = new ContactDataForAssert("Renold","Lec","INIZIO.io",null);
-        app.getContactHelper().fillContactsData(contacts);
+        ContactData contacts = new ContactData().firstName("Renold").lastName("Lec").companyName("INIZIO.io");
+        app.getContactHelper().fillContactForm(contacts);
         app.getContactHelper().clickUpdate();
         app.goTo().homePage();
-        List<ContactDataForAssert> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.getContactHelper().getContactList();
 //        int after  = app.getContactHelper().getContactCount();
         Assert.assertEquals(after.size(), before.size());
 

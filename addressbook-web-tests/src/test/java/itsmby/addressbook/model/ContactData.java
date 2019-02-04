@@ -109,6 +109,7 @@ public class ContactData {
     public String toString() {
         return "ContactData{" +
                 "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 '}';
     }
 
@@ -117,11 +118,12 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return Objects.equals(firstName, that.firstName);
+        return Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName);
+        return Objects.hash(firstName, lastName);
     }
 }
