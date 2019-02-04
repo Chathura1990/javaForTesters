@@ -5,7 +5,6 @@ import itsmby.addressbook.model.ContactDataForAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class ContactsModificationTest extends TestBase {
 
     @Test(priority = 1)
     public void testContactsModification() {
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().homePage();
         if (!app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(contactData.firstName("James")
                     .middleName("R")
@@ -27,13 +26,13 @@ public class ContactsModificationTest extends TestBase {
                     .birthYear("1985")
                     .notes("Hello"));
         }
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().homePage();
         List<ContactDataForAssert> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectContactToEdit(before.size() - 1);
         ContactDataForAssert contacts = new ContactDataForAssert("Renold","Lec","INIZIO.io",null);
         app.getContactHelper().fillContactsData(contacts);
         app.getContactHelper().clickUpdate();
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().homePage();
         List<ContactDataForAssert> after = app.getContactHelper().getContactList();
 //        int after  = app.getContactHelper().getContactCount();
         Assert.assertEquals(after.size(), before.size());

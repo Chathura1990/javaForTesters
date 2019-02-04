@@ -28,7 +28,7 @@ public class CreateContactsTest extends TestBase {
                         .birthYear("1990")
                         .notes(RandomStringUtils.randomAlphanumeric(5)));
         app.getContactHelper().clickSubmit();
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().homePage();
         int after  = app.getContactHelper().getContactCount();
         Assert.assertEquals(after, before + 1);
     }
@@ -41,7 +41,7 @@ public class CreateContactsTest extends TestBase {
         app.getContactHelper()
                 .fillContactsData(contacts);
         app.getContactHelper().clickSubmit();
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().homePage();
         List<ContactDataForAssert> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() + 1);
 

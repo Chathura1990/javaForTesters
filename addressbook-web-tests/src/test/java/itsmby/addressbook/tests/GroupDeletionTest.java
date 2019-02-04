@@ -2,28 +2,34 @@ package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.GroupData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class GroupDeletionTest extends TestBase {
 
+    @BeforeMethod
+    public void ensurePreconditions(){
+        app.goTo().groupPage();
+        if (app.group().list().size() == 0) {
+            app.group().create(new GroupData("Hi", "This is a", "Deletion"));
+        }
+    }
+
     @Test
     public void testDeleteGroups() {
-        app.getNavigationHelper().gotoGroupPage();
-        if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("test1", "test", "test"));
-        }
-        List<GroupData> before = app.getGroupHelper().getGroupList();
-        app.getGroupHelper().selectGroup(before.size() - 1);
-        app.getGroupHelper().deleteSelectedGroups();
-        app.getGroupHelper().returnToGroupPage();
-        List<GroupData> after = app.getGroupHelper().getGroupList();
-        Assert.assertEquals(after.size(), before.size() - 1);
+        List<GroupData> before = app.group().list();
+        int index = before.size() - 1;
+        app.group().delete(index);
+        List<GroupData> after = app.group().list();
+        Assert.assertEquals(after.size(), index);
         if(before.size() > 0){
-        before.remove(before.size() - 1);
+        before.remove(index);
         }
         Assert.assertEquals(after, before);
     }
+
+
 
 }
