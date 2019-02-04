@@ -1,11 +1,13 @@
 package itsmby.addressbook.appmanager;
 
 import itsmby.addressbook.model.ContactData;
+import itsmby.addressbook.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import javax.management.relation.InvalidRelationTypeException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +17,10 @@ public class ContactHelper extends HelperBase {
 
     public ContactHelper(WebDriver wd) {
         super(wd);
+    }
+
+    public void returnToContactPage() {
+        click(By.xpath("//*[@id='content']/div/i/a[2]"));
     }
 
     public void clickSubmit() {
@@ -46,12 +52,32 @@ public class ContactHelper extends HelperBase {
         type(By.name("notes"), contactData.getNotes());
     }
 
-    public void clickAddNewButton() {
-        click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
+    public void createContact(ContactData contacts) {
+        clickAddNewButton();
+        fillContactForm(contacts);
+        clickSubmit();
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void create(ContactData contacts) {
+       fillContactForm(contacts);
+       clickSubmit();
+       returnToContactPage();
+    }
+
+    public void modify(ContactData contacts) {
+       selectContactToEditById(contacts.getId());
+       fillContactForm(contacts);
+       clickUpdate();
+    }
+
+    public void delete(ContactData deletedContact) {
+       selectContactById(deletedContact.getId());
+       deleteSelectedContact();
+       acceptDeletion();
+    }
+
+    public void clickAddNewButton() {
+        click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
     }
 
     public void deleteSelectedContact() {
@@ -62,27 +88,16 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void selectContactToEdit(int index) {
-        wd.findElements(By.xpath("//*[@src='icons/pencil.png']")).get(index).click();
-//        click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    public void selectContactToEditById(int id) {
+        wd.findElement(By.xpath("//*[@href='edit.php?id="+id+"']")).click();
     }
 
-    public boolean isThereAContact() {
-        return isELementPresent(By.name("selected[]"));
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
     }
 
-    public void createContact(ContactData contacts) {
-        clickAddNewButton();
-        fillContactForm(contacts);
-        clickSubmit();
-    }
-
-    public int getContactCount() {
-        return wd.findElements(By.name("selected[]")).size();
-    }
-
-    public List<ContactData> getContactList() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         WebElement table = wd.findElement(By.xpath("//*[@id='maintable']/tbody"));
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (WebElement row : rows) {
@@ -91,28 +106,11 @@ public class ContactHelper extends HelperBase {
             if (columns_count>0) {
                 String lastName = Columns_row.get(1).getText();
                 String firstName = Columns_row.get(2).getText();
-                ContactData contact = new ContactData().lastName(lastName).firstName(firstName);
+                int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+                ContactData contact = new ContactData().Id(id).lastName(lastName).firstName(firstName);
                 contacts.add(contact);
             }
         }
         return contacts;
     }
-
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
-        WebElement table = wd.findElement(By.xpath("//*[@id='maintable']/tbody"));
-        List<WebElement> rows = table.findElements(By.tagName("tr"));
-        for (WebElement row : rows) {
-            List<WebElement> Columns_row = row.findElements(By.tagName("td"));
-            int columns_count = Columns_row.size();
-            if (columns_count>0) {
-                String lastName = Columns_row.get(1).getText();
-                String firstName = Columns_row.get(2).getText();
-                ContactData contact = new ContactData().lastName(lastName).firstName(firstName);
-                contacts.add(contact);
-            }
-        }
-        return contacts;
-    }
-
 }

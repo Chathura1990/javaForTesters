@@ -1,11 +1,14 @@
 package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.ContactData;
+import itsmby.addressbook.model.Contacts;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactsModificationTest extends TestBase {
     ContactData contactData = new ContactData();
@@ -13,7 +16,7 @@ public class ContactsModificationTest extends TestBase {
     @Test(priority = 1)
     public void testContactsModification() {
         app.goTo().homePage();
-        if (!app.contact().isThereAContact()) {
+        if (app.contact().all().size() == 0) {
             app.contact().createContact(contactData.firstName("James")
                     .middleName("R")
                     .lastName("Detroit")
@@ -26,18 +29,16 @@ public class ContactsModificationTest extends TestBase {
                     .notes("Hello"));
         }
         app.goTo().homePage();
-        List<ContactData> before = app.contact().getContactList();
-        app.contact().selectContactToEdit(before.size() - 1);
-        ContactData contacts = new ContactData().firstName("Renold").lastName("Lec").companyName("INIZIO.io");
-        app.contact().fillContactForm(contacts);
-        app.contact().clickUpdate();
+        Contacts before = app.contact().all();
+        ContactData modifyContact = before.iterator().next();
+        ContactData contact = new ContactData().Id(modifyContact.getId()).firstName("Renold").lastName("Lec").companyName("INIZIO.io");
+        app.contact().modify(contact);
         app.goTo().homePage();
-        List<ContactData> after = app.contact().getContactList();
-//        int after  = app.contact().getContactCount();
+        Contacts after = app.contact().all();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(before.size() - 1);
-        before.add(contacts);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        assertThat(after, equalTo(before.without(modifyContact).withAdded(contact)));
     }
+
+
 }
