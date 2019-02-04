@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -81,6 +83,23 @@ public class ContactHelper extends HelperBase {
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<ContactData>();
+        WebElement table = wd.findElement(By.xpath("//*[@id='maintable']/tbody"));
+        List<WebElement> rows = table.findElements(By.tagName("tr"));
+        for (WebElement row : rows) {
+            List<WebElement> Columns_row = row.findElements(By.tagName("td"));
+            int columns_count = Columns_row.size();
+            if (columns_count>0) {
+                String lastName = Columns_row.get(1).getText();
+                String firstName = Columns_row.get(2).getText();
+                ContactData contact = new ContactData().lastName(lastName).firstName(firstName);
+                contacts.add(contact);
+            }
+        }
+        return contacts;
+    }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
         WebElement table = wd.findElement(By.xpath("//*[@id='maintable']/tbody"));
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (WebElement row : rows) {

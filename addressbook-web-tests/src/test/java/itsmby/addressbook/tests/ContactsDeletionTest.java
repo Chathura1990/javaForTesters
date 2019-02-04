@@ -12,8 +12,8 @@ public class ContactsDeletionTest extends TestBase {
     @Test
     public void testContactDeletion() {
         app.goTo().homePage();
-        if (!app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(contactData.firstName("Leck")
+        if (!app.contact().isThereAContact()) {
+            app.contact().createContact(contactData.firstName("Leck")
                     .middleName("L")
                     .lastName("Kesy")
                     .nickname("Lecs")
@@ -25,12 +25,12 @@ public class ContactsDeletionTest extends TestBase {
                     .notes("Test"));
         }
         app.goTo().homePage();
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().selectContact(before.size() - 1);
-        app.getContactHelper().deleteSelectedContact();
-        app.getContactHelper().acceptDeletion();
+        List<ContactData> before = app.contact().getContactList();
+        app.contact().selectContact(before.size() - 1);
+        app.contact().deleteSelectedContact();
+        app.contact().acceptDeletion();
         app.goTo().homePage();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contact().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(before.size() -1);

@@ -13,8 +13,8 @@ public class ContactsModificationTest extends TestBase {
     @Test(priority = 1)
     public void testContactsModification() {
         app.goTo().homePage();
-        if (!app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(contactData.firstName("James")
+        if (!app.contact().isThereAContact()) {
+            app.contact().createContact(contactData.firstName("James")
                     .middleName("R")
                     .lastName("Detroit")
                     .nickname("Deta")
@@ -26,14 +26,14 @@ public class ContactsModificationTest extends TestBase {
                     .notes("Hello"));
         }
         app.goTo().homePage();
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().selectContactToEdit(before.size() - 1);
+        List<ContactData> before = app.contact().getContactList();
+        app.contact().selectContactToEdit(before.size() - 1);
         ContactData contacts = new ContactData().firstName("Renold").lastName("Lec").companyName("INIZIO.io");
-        app.getContactHelper().fillContactForm(contacts);
-        app.getContactHelper().clickUpdate();
+        app.contact().fillContactForm(contacts);
+        app.contact().clickUpdate();
         app.goTo().homePage();
-        List<ContactData> after = app.getContactHelper().getContactList();
-//        int after  = app.getContactHelper().getContactCount();
+        List<ContactData> after = app.contact().getContactList();
+//        int after  = app.contact().getContactCount();
         Assert.assertEquals(after.size(), before.size());
 
         before.remove(before.size() - 1);

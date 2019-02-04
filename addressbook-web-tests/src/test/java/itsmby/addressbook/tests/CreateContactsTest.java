@@ -13,8 +13,8 @@ public class CreateContactsTest extends TestBase {
 
 
     public void testCreateContacts() {
-        int before = app.getContactHelper().getContactCount();
-        app.getContactHelper().clickAddNewButton();
+        int before = app.contact().getContactCount();
+        app.contact().clickAddNewButton();
         ContactData contactData = new ContactData().firstName(RandomStringUtils.randomAlphanumeric(5))
                 .middleName(RandomStringUtils.randomAlphanumeric(1))
                 .lastName(RandomStringUtils.randomAlphanumeric(5))
@@ -25,27 +25,29 @@ public class CreateContactsTest extends TestBase {
                 .birthMonth("April")
                 .birthYear("1990")
                 .notes(RandomStringUtils.randomAlphanumeric(5));
-        app.getContactHelper().fillContactForm(contactData);
-        app.getContactHelper().clickSubmit();
-        app.goTo().homePage();
-        int after  = app.getContactHelper().getContactCount();
+        create(contactData);
+        int after  = app.contact().getContactCount();
         Assert.assertEquals(after, before + 1);
     }
 
     @Test(priority = 2)
     public void testFillContactForm() {
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().clickAddNewButton();
-        ContactData contacts = new ContactData().firstName("Tony").lastName("Stark").companyName("WorldWar.lk");
-        app.getContactHelper()
-                .fillContactForm(contacts);
-        app.getContactHelper().clickSubmit();
-        app.goTo().homePage();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().getContactList();
+        app.contact().clickAddNewButton();
+        ContactData contacts = new ContactData()
+                .firstName("Tony").lastName("Stark").companyName("WorldWar.lk");
+        create(contacts);
+        List<ContactData> after = app.contact().getContactList();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(contacts);
         Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+    }
+
+    private void create(ContactData contacts) {
+        app.contact().fillContactForm(contacts);
+        app.contact().clickSubmit();
+        app.goTo().homePage();
     }
 
 
