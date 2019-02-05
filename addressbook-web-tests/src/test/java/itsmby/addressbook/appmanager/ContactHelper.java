@@ -80,6 +80,10 @@ public class ContactHelper extends HelperBase {
        contactsCache = null;
     }
 
+    public int count() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
     public void clickAddNewButton() {
         click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
     }
