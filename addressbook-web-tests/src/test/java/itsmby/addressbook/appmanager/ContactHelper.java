@@ -7,11 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import javax.management.relation.InvalidRelationTypeException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -67,7 +63,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void modify(ContactData contacts) {
-       selectContactToEditById(contacts.getId());
+       initContactModificationById(contacts.getId());
        fillContactForm(contacts);
        clickUpdate();
        contactsCache = null;
@@ -84,6 +80,18 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    public ContactData infoFromEditForm(ContactData contact){
+        initContactModificationById(contact.getId());
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().Id(contact.getId()).firstName(firstName).lastName(lastName)
+                .homePhone(home).mobilePhone(mobile).workPhone(work);
+    }
+
     public void clickAddNewButton() {
         click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
     }
@@ -96,7 +104,7 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void selectContactToEditById(int id) {
+    public void initContactModificationById(int id) {
         wd.findElement(By.xpath("//*[@href='edit.php?id="+id+"']")).click();
     }
 
