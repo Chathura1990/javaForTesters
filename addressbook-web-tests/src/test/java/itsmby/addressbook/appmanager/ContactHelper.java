@@ -27,6 +27,26 @@ public class ContactHelper extends HelperBase {
         click(By.name("update"));
     }
 
+    public void clickAddNewButton() {
+        click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
+    }
+
+    public void deleteSelectedContact() {
+        click(By.xpath("//*[@id='content']/form[2]/div[2]/input"));
+    }
+
+    public void acceptDeletion() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void initContactModificationById(int id) {
+        wd.findElement(By.xpath("//*[@href='edit.php?id="+id+"']")).click();
+    }
+
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
+    }
+
     public void fillContactForm(ContactData contactData) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
@@ -84,54 +104,38 @@ public class ContactHelper extends HelperBase {
         initContactModificationById(contact.getId());
         String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
         String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getAttribute("value");
+        String email1 = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().Id(contact.getId()).firstName(firstName).lastName(lastName)
+                .address(address).emailAddress(email1).emailAddress2(email2).emailAddress3(email3)
                 .homePhone(home).mobilePhone(mobile).workPhone(work);
-    }
-
-    public void clickAddNewButton() {
-        click(By.xpath("//*[@id='nav']/ul/li[2]/a"));
-    }
-
-    public void deleteSelectedContact() {
-        click(By.xpath("//*[@id='content']/form[2]/div[2]/input"));
-    }
-
-    public void acceptDeletion() {
-        wd.switchTo().alert().accept();
-    }
-
-    public void initContactModificationById(int id) {
-        wd.findElement(By.xpath("//*[@href='edit.php?id="+id+"']")).click();
-    }
-
-    public void selectContactById(int id) {
-        wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
     }
 
     private Contacts contactsCache = null;
 
     public Contacts all() {
-        if (contactsCache != null){
+        if(contactsCache != null){
             return new Contacts(contactsCache);
         }
         contactsCache = new Contacts();
-        WebElement table = wd.findElement(By.xpath("//*[@id='maintable']/tbody"));
-        List<WebElement> rows = table.findElements(By.tagName("tr"));
+        List<WebElement> rows = wd.findElements(By.name("entry"));
         for (WebElement row : rows) {
             List<WebElement> Columns_row = row.findElements(By.tagName("td"));
-            int columns_count = Columns_row.size();
-            if (columns_count>0) {
+                int id = Integer.parseInt(Columns_row.get(0).findElement(By.tagName("input")).getAttribute("value"));
                 String lastName = Columns_row.get(1).getText();
                 String firstName = Columns_row.get(2).getText();
-                int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-                ContactData contact = new ContactData().Id(id).lastName(lastName).firstName(firstName);
-                contactsCache.add(contact);
+                String address = Columns_row.get(3).getText();
+                String allEmails = Columns_row.get(4).getText();
+                String allPhones = Columns_row.get(5).getText();
+                contactsCache.add(new ContactData().Id(id).lastName(lastName).firstName(firstName).allAddress(address)
+                        .allEmailAddresses(allEmails).allPhones(allPhones));
             }
-        }
-        return contactsCache;
+        return new Contacts(contactsCache);
     }
 }

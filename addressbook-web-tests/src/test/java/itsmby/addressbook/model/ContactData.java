@@ -12,8 +12,14 @@ public class ContactData {
     private String homePhone;
     private String mobilePhone;
     private String workPhone;
+    private String allPhones;
     private String companyName;
+    private String allAddress;
+    private String address;
+    private String allEmailAddresses;
     private String emailAddress;
+    private String emailAddress2;
+    private String emailAddress3;
     private String birthMonth;
     private String birthYear;
     private String birthDate;
@@ -54,13 +60,43 @@ public class ContactData {
         return this;
     }
 
+    public ContactData allPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
     public ContactData companyName(String companyName) {
         this.companyName = companyName;
         return this;
     }
 
+    public ContactData allAddress(String allAddress) {
+        this.allAddress = allAddress;
+        return this;
+    }
+
+    public ContactData address(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData allEmailAddresses(String allEmailAddresses) {
+        this.allEmailAddresses = allEmailAddresses;
+        return this;
+    }
+
     public ContactData emailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public ContactData emailAddress2(String emailAddress2) {
+        this.emailAddress2 = emailAddress2;
+        return this;
+    }
+
+    public ContactData emailAddress3(String emailAddress3) {
+        this.emailAddress3 = emailAddress3;
         return this;
     }
 
@@ -113,12 +149,28 @@ public class ContactData {
 
     public String getWorkPhone() { return workPhone; }
 
+    public String getAllPhones() { return allPhones; }
+
     public String getCompanyName() {
         return companyName;
     }
 
+    public String getAllAddress() { return allAddress; }
+
+    public String getAddress() { return address; }
+
+    public String getAllEmailAddresses() { return allEmailAddresses; }
+
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public String getEmailAddress2() {
+        return emailAddress2;
+    }
+
+    public String getEmailAddress3() {
+        return emailAddress3;
     }
 
     public String getBirthDate() {
