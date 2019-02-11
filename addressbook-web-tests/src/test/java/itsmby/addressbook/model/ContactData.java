@@ -1,5 +1,6 @@
 package itsmby.addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public class ContactData {
@@ -24,6 +25,12 @@ public class ContactData {
     private String birthYear;
     private String birthDate;
     private String notes;
+    private File photo;
+
+    public ContactData photo(File photo) {
+        this.photo = photo;
+        return this;
+    }
 
     public ContactData firstName(String firstName) {
         this.firstName = firstName;
@@ -188,6 +195,8 @@ public class ContactData {
     public String getNotes() {
         return notes;
     }
+
+    public File getPhoto() { return photo; }
 
     @Override
     public String toString() {
