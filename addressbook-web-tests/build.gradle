@@ -15,6 +15,6 @@ dependencies {
     compile("com.beust:jcommander:1.72")
     //xstream
     compile("com.thoughtworks.xstream:xstream:1.4.11.1")
-    
-    
+    //json
+    compile("com.google.code.gson:gson:2.8.5")
 }
