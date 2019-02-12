@@ -1,23 +1,36 @@
 package itsmby.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("contact")
 public class ContactData {
 
+    @XStreamOmitField
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String firstName;
+    @Expose
     private String middleName;
+    @Expose
     private String lastName;
+    @Expose
     private String nickname;
+    @Expose
     private String homePhone;
     private String mobilePhone;
     private String workPhone;
     private String allPhones;
+    @Expose
     private String companyName;
     private String allAddress;
     private String address;
     private String allEmailAddresses;
+    @Expose
     private String emailAddress;
     private String emailAddress2;
     private String emailAddress3;
@@ -25,6 +38,7 @@ public class ContactData {
     private String birthYear;
     private String birthDate;
     private String notes;
+    @Expose
     private File photo;
 
     public ContactData photo(File photo) {
