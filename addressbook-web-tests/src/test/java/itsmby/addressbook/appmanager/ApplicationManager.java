@@ -1,5 +1,6 @@
 package itsmby.addressbook.appmanager;
 
+import com.beust.jcommander.Parameter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -27,12 +28,14 @@ public class ApplicationManager {
 
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
+        String driver = System.getProperty("driver", "browsers");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", driver))));
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         if (browser.equals(BrowserType.CHROME)) {
-            System.setProperty("webdriver.chrome.driver", ".\\src\\main\\resources\\driver\\chromedriver.exe");
+            System.setProperty(properties.getProperty("web.chromeDriver"), properties.getProperty("web.forChrome"));
             wd = new ChromeDriver();
         } else if (browser.equals(BrowserType.FIREFOX)) {
-            System.setProperty("webdriver.gecko.driver", ".\\src\\main\\resources\\driver\\geckodriver.exe");
+            System.setProperty(properties.getProperty("web.firefoxDriver"), properties.getProperty("web.forFirefox"));
             wd = new FirefoxDriver();
         }
         wd.manage().window().maximize();
