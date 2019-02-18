@@ -17,6 +17,12 @@ dependencies {
     compile("com.thoughtworks.xstream:xstream:1.4.11.1")
     //json
     compile("com.google.code.gson:gson:2.8.5")
+    //logback
+    compile("ch.qos.logback:logback-classic:1.3.0-alpha4")
+    //Connector/j
+    compile("mysql:mysql-connector-java:8.0.15")
+    //Hibernate-core
+    compile("org.hibernate:hibernate-core:5.4.1.Final")
 }
 
 task testGroups(type:Test) {
