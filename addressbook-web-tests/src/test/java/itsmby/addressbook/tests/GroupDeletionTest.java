@@ -2,7 +2,6 @@ package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.GroupData;
 import itsmby.addressbook.model.Groups;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -28,6 +27,7 @@ public class GroupDeletionTest extends TestBase {
         assertThat(app.group().count(), equalTo(before.size() - 1));
         Groups after = app.db().groups();
         assertThat(after,equalTo(before.without(deletedGroup)));
+        verifyGroupListInUI();
     }
 
 
