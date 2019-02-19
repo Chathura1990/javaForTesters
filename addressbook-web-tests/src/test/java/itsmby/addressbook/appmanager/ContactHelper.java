@@ -43,6 +43,11 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.xpath("//*[@href='edit.php?id="+id+"']")).click();
     }
 
+    public void select(){
+        Select value = new Select(wd.findElement(By.name("group")));
+        value.selectByValue("95");
+    }
+
     public void selectContactById(int id) {
         wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
     }

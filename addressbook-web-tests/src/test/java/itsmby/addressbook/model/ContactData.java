@@ -28,25 +28,24 @@ public class ContactData {
     @Column(name = "lastname")
     private String lastName;
     @Expose
-    @Transient
+    @Column(name = "nickname")
     private String nickname;
     @Expose
-    @Column(name = "home")
-    @Type(type = "text")
+    @Transient
     private String homePhone;
-    @Column(name = "mobile")
-    @Type(type = "text")
+    @Transient
     private String mobilePhone;
-    @Column(name = "work")
-    @Type(type = "text")
+    @Transient
     private String workPhone;
     @Transient
     private String allPhones;
     @Expose
-    @Transient
+    @Column(name = "company")
     private String companyName;
     @Transient
     private String allAddress;
+    @Column(name = "address")
+    @Type(type = "text")
     @Transient
     private String address;
     @Transient
@@ -67,8 +66,7 @@ public class ContactData {
     @Transient
     private String notes;
     @Expose
-    @Column(name = "photo")
-    @Type(type = "text")
+    @Transient
     private String photo;
 
     public ContactData Id(int id) {
@@ -240,13 +238,22 @@ public class ContactData {
         return notes;
     }
 
-    public File getPhoto() { return new File(photo); }
+    public File getPhoto() {
+        if (photo == null) {
+            return null;
+        }
+        return new File(photo);
+    }
 
     @Override
     public String toString() {
         return "ContactData{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 
@@ -257,12 +264,14 @@ public class ContactData {
         ContactData that = (ContactData) o;
         return id == that.id &&
                 Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName);
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(nickname, that.nickname) &&
+                Objects.equals(companyName, that.companyName) &&
+                Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName);
+        return Objects.hash(id, firstName, lastName, nickname, companyName, address);
     }
-
 }

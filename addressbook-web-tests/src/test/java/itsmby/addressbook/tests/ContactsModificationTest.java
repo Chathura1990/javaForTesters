@@ -2,10 +2,7 @@ package itsmby.addressbook.tests;
 
 import itsmby.addressbook.model.ContactData;
 import itsmby.addressbook.model.Contacts;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,14 +25,14 @@ public class ContactsModificationTest extends TestBase {
                     .birthYear("1985")
                     .notes("Hello"));
         }
-        app.goTo().homePage();
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         ContactData modifyContact = before.iterator().next();
-        ContactData contact = new ContactData().Id(modifyContact.getId()).firstName("Renold").lastName("Lec").companyName("INIZIO.io");
+        ContactData contact = new ContactData().Id(modifyContact.getId()).firstName("Renold").lastName("Lec").nickname("Rel").companyName("INIZIO.io").address(null);
+        app.goTo().homePage();
         app.contact().modify(contact);
         app.goTo().homePage();
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(before.without(modifyContact).withAdded(contact)));
     }
 

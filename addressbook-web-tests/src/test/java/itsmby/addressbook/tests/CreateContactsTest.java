@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import itsmby.addressbook.model.ContactData;
 import itsmby.addressbook.model.Contacts;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -37,11 +40,10 @@ public class CreateContactsTest extends TestBase {
 
     @Test(dataProvider = "validContactsFromJson")
     public void testCreateContacts(ContactData contacts) {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         app.contact().clickAddNewButton();
         app.contact().create(contacts);
-        assertThat(app.contact().count(), equalTo(before.size() + 1));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(
                 before.withAdded(contacts.Id(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
     }
