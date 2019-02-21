@@ -4,9 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import itsmby.addressbook.model.ContactData;
 import itsmby.addressbook.model.Contacts;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

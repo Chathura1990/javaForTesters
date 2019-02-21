@@ -7,7 +7,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -68,6 +70,10 @@ public class ContactData {
     @Expose
     @Transient
     private String photo;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
     public ContactData Id(int id) {
         this.id = id;
@@ -245,6 +251,10 @@ public class ContactData {
         return new File(photo);
     }
 
+    public Groups getGroups(){
+        return new Groups(groups);
+    }
+
     @Override
     public String toString() {
         return "ContactData{" +
@@ -253,7 +263,6 @@ public class ContactData {
                 ", lastName='" + lastName + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", companyName='" + companyName + '\'' +
-                ", address='" + address + '\'' +
                 '}';
     }
 
@@ -266,12 +275,11 @@ public class ContactData {
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(nickname, that.nickname) &&
-                Objects.equals(companyName, that.companyName) &&
-                Objects.equals(address, that.address);
+                Objects.equals(companyName, that.companyName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, nickname, companyName, address);
+        return Objects.hash(id, firstName, lastName, nickname, companyName);
     }
 }

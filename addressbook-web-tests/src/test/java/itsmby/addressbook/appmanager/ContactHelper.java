@@ -2,11 +2,12 @@ package itsmby.addressbook.appmanager;
 
 import itsmby.addressbook.model.ContactData;
 import itsmby.addressbook.model.Contacts;
+import itsmby.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -14,6 +15,9 @@ public class ContactHelper extends HelperBase {
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
+
+    NavigationHelper nvh = new NavigationHelper(wd);
+    GroupHelper grph = new GroupHelper(wd);
 
     public void returnToContactPage() {
         click(By.xpath("//*[@id='content']/div/i/a[2]"));
@@ -43,9 +47,12 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.xpath("//*[@href='edit.php?id="+id+"']")).click();
     }
 
-    public void select(){
-        Select value = new Select(wd.findElement(By.name("group")));
-        value.selectByValue("95");
+    public boolean checkAvailabilityOfContacts(){
+        return isELementPresent(By.name("selected[]"));
+    }
+
+    public void selectFirstContact(){
+        click(By.name("selected[]"));
     }
 
     public void selectContactById(int id) {
@@ -60,17 +67,16 @@ public class ContactHelper extends HelperBase {
         type(By.name("company"), contactData.getCompanyName());
         type(By.name("email"), contactData.getEmailAddress());
         attach(By.name("photo"),contactData.getPhoto());
-        if(contactData.getBirthDate() != null){
-            click(By.name("bday"));
-            new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthDate());
-            click(By.name("bday"));
-        }
-        if(contactData.getBirthMonth() != null) {
-            click(By.name("bmonth"));
-            new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBirthMonth());
-            click(By.name("bmonth"));
-        }
-        type(By.name("byear"), contactData.getBirthYear());
+//        if(creation){
+//            Assert.assertTrue(contactData.getGroups().size() == 1);
+//            if(contactData.getGroups().size() > 0){
+//                System.out.println(contactData.getGroups().size());
+//
+//                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+//            }else{
+//                Assert.assertFalse(isELementPresent(By.name("new_group")));
+//            }
+//        }
         type(By.name("notes"), contactData.getNotes());
     }
 
@@ -100,6 +106,16 @@ public class ContactHelper extends HelperBase {
        deleteSelectedContact();
        acceptDeletion();
        contactsCache = null;
+    }
+
+    public void clickGotoGroupPage(){
+        click(By.xpath("//*[contains(text(),'group page')]"));
+    }
+
+    public void deleteContactInGroups(ContactData cnt){
+        WebDriverWait wait = new WebDriverWait(wd,5);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[value='"+cnt.getId()+"']"))).click();
+        click(By.name("remove"));
     }
 
     public int count() {
@@ -143,5 +159,22 @@ public class ContactHelper extends HelperBase {
                         .allEmailAddresses(allEmails).allPhones(allPhones));
             }
         return new Contacts(contactsCache);
+    }
+
+    public void addToGroup(GroupData group, ContactData cnt) {
+        if(!isELementPresent(By.name("selected[]"))) {
+            nvh.homePageWithoutFilters();
+            selectContactById(cnt.getId());
+            grph.toGroup(group.getId());
+            click(By.name("add"));
+        }
+    }
+
+    public void checkAvailabilityOfContactsAndCreate(ContactData cnt) {
+        if (new DbHelper().contacts().size() == 0){
+            nvh.homePageWithoutFilters();
+            new ContactHelper(wd).createContact(cnt);
+            nvh.homePageWithoutFilters();
+        }
     }
 }

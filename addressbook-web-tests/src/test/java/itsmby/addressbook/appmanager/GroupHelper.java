@@ -5,6 +5,7 @@ import itsmby.addressbook.model.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -28,6 +29,29 @@ public class GroupHelper extends HelperBase {
         type(By.name("group_footer"), groupData.getFooter());
     }
 
+    public void selectGroup(String groupName) {
+        Select group = new Select(wd.findElement(By.name("group")));
+        group.selectByVisibleText(groupName);
+
+    }
+
+    public void checkAvailabilityOfGroupsAndCreate(GroupData grp){
+        if(new DbHelper().groups().size() == 0){
+            new NavigationHelper(wd).groupPage();
+            new GroupHelper(wd).create(new GroupData().withName(grp.getName()).withHeader(grp.getHeader()));
+        }
+    }
+
+    public void toGroup(int id){
+        Select value = new Select(wd.findElement(By.name("to_group")));
+        value.selectByValue(Integer.toString(id));
+    }
+
+    public String getGroupName(){
+        Select option = new Select(wd.findElement(By.name("group")));
+        List<WebElement> optionsList = option.getOptions();
+        return optionsList.get(1).getText();
+    }
 
     public void initGroupCreation() {
         click(By.name("new"));
@@ -53,7 +77,7 @@ public class GroupHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public void create(GroupData group) throws InterruptedException {
+    public void create(GroupData group){
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();

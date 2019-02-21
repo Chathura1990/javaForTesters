@@ -27,7 +27,7 @@ public class ContactsModificationTest extends TestBase {
         }
         Contacts before = app.db().contacts();
         ContactData modifyContact = before.iterator().next();
-        ContactData contact = new ContactData().Id(modifyContact.getId()).firstName("Renold").lastName("Lec").nickname("Rel").companyName("INIZIO.io").address(null);
+        ContactData contact = new ContactData().Id(modifyContact.getId()).firstName("Renold").lastName("Lec").nickname("Rel").companyName("INIZIO.io");
         app.goTo().homePage();
         app.contact().modify(contact);
         app.goTo().homePage();

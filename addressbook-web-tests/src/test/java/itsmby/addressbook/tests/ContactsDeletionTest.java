@@ -24,9 +24,6 @@ public class ContactsDeletionTest extends TestBase {
                     .nickname("Lecs")
                     .companyName("ITDOC")
                     .emailAddress("lecs@itdoc.by")
-                    .birthDate("8")
-                    .birthMonth("February")
-                    .birthYear("1995")
                     .notes("Test"));
         }
     }
