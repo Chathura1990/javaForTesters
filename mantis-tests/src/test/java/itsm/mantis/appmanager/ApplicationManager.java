@@ -36,8 +36,6 @@ public class ApplicationManager {
         wd.manage().deleteAllCookies();
 //        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
-        new SessionHelper(wd).login(properties
-                .getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
     }
 
     public void stop() {
