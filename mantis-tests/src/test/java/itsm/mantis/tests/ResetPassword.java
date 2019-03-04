@@ -17,46 +17,30 @@ import java.io.IOException;
 import java.util.List;
 
 public class ResetPassword extends TestBase {
-    private SessionFactory sessionFactory;
 
     @BeforeMethod
     public void startMailServerAndSession(){
         app.mail().start();
-
-        // A SessionFactory is set up once for an application!
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
-            StandardServiceRegistryBuilder.destroy( registry );
-        }
+        app.resetPassword().createSession();
     }
 
     @Test
     public void testResetPassword() throws InterruptedException, IOException {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<UserData> result = session.createQuery( "from UserData" ).list();
-        session.getTransaction().commit();
-        session.close();
-        String username = "Administrator" ;
+        List<UserData> result = app.resetPassword().getUserData();
+        String userName = result.iterator().next().getUserName();
+        String realName = result.iterator().next().getRealname();
+        String userEmail = result.iterator().next().getEmail();
+        String admin = "Administrator" ;
         String adminPass = "root";
         String newPass = "password";
-        app.resetPassword().start(username,adminPass);
-        app.resetPassword().selectAUserToResetPass(result.get(2).getUserName());
+        app.resetPassword().start(admin,adminPass);
+        app.resetPassword().selectAUserToResetPass(userName);
         app.resetPassword().clickRestPassBtn();
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
-        String confirmationLink = findConfirmationLink(mailMessages, result.get(2).getEmail());
+        String confirmationLink = findConfirmationLink(mailMessages, userEmail);
         app.resetPassword().finish(confirmationLink,newPass);
         Thread.sleep(3000);
-        Assert.assertTrue(app.newSession().login(result.get(2).getUserName(),result.get(2).getRealname(),newPass));
-
+        Assert.assertTrue(app.newSession().login(userName,realName,newPass));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
