@@ -7,6 +7,16 @@ public class Issue {
     private int id;
     private String subject;
     private String description;
+    private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public Issue withState(String state) {
+        this.state = state;
+        return this;
+    }
 
     public int getId() {
         return id;
@@ -33,6 +43,10 @@ public class Issue {
     public Issue withDescription(String description) {
         this.description = description;
         return this;
+    }
+
+    public boolean isResolved(){
+        return "3".equals(getState());
     }
 
     @Override
