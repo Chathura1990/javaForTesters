@@ -7,6 +7,9 @@ repositories {
 dependencies {
     testCompile 'org.testng:testng:6.8.21'
     compile("org.seleniumhq.selenium:selenium-java:3.141.59")
+    compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.2.6'
+    compile group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+    compile("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
 }
 
 buildscript{
@@ -24,6 +27,6 @@ wsdl2java {
     generatedWsdlDir = file("src/main/java")  // target directory for generated source code
     wsdlDir = file("src/main/resources") // define to support incremental build
     wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
-                          ['src/main/resources/geoipservice.wsdl']
+                          ['src/main/resources/geoipservice.wsdl'],
     ]
 }
