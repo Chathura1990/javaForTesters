@@ -16,7 +16,7 @@ public class EquationTests {
     public void test1(){
         Equation e = new Equation(1,2,1);
         System.out.println(e.rootNumber());
-        Assert.assertEquals(e.rootNumber(), 1.0);
+        Assert.assertEquals(e.rootNumber(), 2.0);
     }
 
     @Test
