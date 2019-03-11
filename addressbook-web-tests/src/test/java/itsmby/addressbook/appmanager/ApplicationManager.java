@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,12 +34,18 @@ public class ApplicationManager {
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", driver))));
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         dbHelper = new DbHelper();
-        if (browser.equals(BrowserType.CHROME)) {
-            System.setProperty(properties.getProperty("web.chromeDriver"), properties.getProperty("web.forChrome"));
-            wd = new ChromeDriver();
-        } else if (browser.equals(BrowserType.FIREFOX)) {
-            System.setProperty(properties.getProperty("web.firefoxDriver"), properties.getProperty("web.forFirefox"));
-            wd = new FirefoxDriver();
+        if("".equals(properties.getProperty("selenium.server"))){
+            if (browser.equals(BrowserType.CHROME)) {
+                System.setProperty(properties.getProperty("web.chromeDriver"), properties.getProperty("web.forChrome"));
+                wd = new ChromeDriver();
+            } else if (browser.equals(BrowserType.FIREFOX)) {
+                System.setProperty(properties.getProperty("web.firefoxDriver"), properties.getProperty("web.forFirefox"));
+                wd = new FirefoxDriver();
+            }
+        }else{
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(browser);
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities)
         }
         wd.manage().window().maximize();
         wd.manage().deleteAllCookies();
