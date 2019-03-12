@@ -4,8 +4,8 @@
     <test name="Groups" >
         <classes>
             <class name="itsmby.addressbook.tests.GroupCreationTest" />
-            <class name="itsmby.addressbook.tests.GroupModificationTest" />
-            <class name="itsmby.addressbook.tests.GroupDeletionTest" />
+           /* <class name="itsmby.addressbook.tests.GroupModificationTest" />
+            <class name="itsmby.addressbook.tests.GroupDeletionTest" />*/
         </classes>
     </test>
 </suite>
