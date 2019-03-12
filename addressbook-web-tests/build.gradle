@@ -38,6 +38,9 @@ task testGroups(type:Test) {
     if (project.hasProperty('driver')){
         systemProperty 'driver', "${driver}"
     }
+    if (project.hasProperty('platform')){
+        systemProperty 'platform', "${platform}"
+    }
     if (project.hasProperty('verifyUI')){
         systemProperty 'verifyUI', "${verifyUI}"
     }
@@ -55,6 +58,9 @@ task testContacts(type:Test) {
     }
     if (project.hasProperty('driver')){
         systemProperty 'driver', "${driver}"
+    }
+    if (project.hasProperty('platform')){
+        systemProperty 'platform', "${platform}"
     }
     if (project.hasProperty('verifyUI')){
         systemProperty 'verifyUI', "${verifyUI}"
